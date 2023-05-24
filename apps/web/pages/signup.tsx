@@ -72,7 +72,6 @@ export default function Signup({ prepopulateFormValues, token }: inferSSRProps<t
         methods.setError("apiError", { message: err.message });
       });
   };
-  // https://delicate-tartufo-a308f6.netlify.app/
   const shortenTheUrl = (url: string) => {
     if (url.length <= 22) {
       return url;
