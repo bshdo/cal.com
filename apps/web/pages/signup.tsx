@@ -72,6 +72,18 @@ export default function Signup({ prepopulateFormValues, token }: inferSSRProps<t
         methods.setError("apiError", { message: err.message });
       });
   };
+  // https://delicate-tartufo-a308f6.netlify.app/
+  const shortenTheUrl = (url: string) => {
+    if (url.length <= 22) {
+      return url;
+    } else {
+      const excessLength = url.length - 22;
+      const startIndex = Math.ceil((url.length - excessLength) / 2);
+      const endIndex = startIndex + excessLength;
+      const truncatedURL = url.slice(0, startIndex) + "..." + url.slice(endIndex);
+      return truncatedURL;
+    }
+  };
 
   return (
     <LicenseRequired>
@@ -111,7 +123,7 @@ export default function Signup({ prepopulateFormValues, token }: inferSSRProps<t
                 {errors.apiError && <Alert severity="error" message={errors.apiError?.message} />}
                 <div className="space-y-4">
                   <TextField
-                    addOnLeading={`${process.env.NEXT_PUBLIC_WEBSITE_URL}/`}
+                    addOnLeading={shortenTheUrl(process.env.NEXT_PUBLIC_WEBSITE_URL)}
                     {...register("username")}
                     required
                   />
