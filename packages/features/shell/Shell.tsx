@@ -47,13 +47,11 @@ import {
 import {
   ArrowLeft,
   ArrowRight,
-  BarChart,
   Calendar,
   Clock,
   Download,
   ExternalLink,
   FileText,
-  Grid,
   HelpCircle,
   Link as LinkIcon,
   LogOut,
@@ -63,12 +61,9 @@ import {
   MoreVertical,
   Settings,
   Slack,
-  Users,
-  Zap,
 } from "@calcom/ui/components/icon";
 
 import FreshChatProvider from "../ee/support/lib/freshchat/FreshChatProvider";
-import { TeamInviteBadge } from "./TeamInviteBadge";
 
 // need to import without ssr to prevent hydration errors
 const Tips = dynamic(() => import("@calcom/features/tips").then((mod) => mod.Tips), {
@@ -483,48 +478,6 @@ const navigation: NavigationItemType[] = [
     icon: Clock,
   },
   {
-    name: "teams",
-    href: "/teams",
-    icon: Users,
-    onlyDesktop: true,
-    badge: <TeamInviteBadge />,
-  },
-  {
-    name: "apps",
-    href: "/apps",
-    icon: Grid,
-    isCurrent: ({ router, item }) => {
-      const path = router.asPath.split("?")[0];
-      // During Server rendering path is /v2/apps but on client it becomes /apps(weird..)
-      return (
-        (path.startsWith(item.href) || path.startsWith("/v2" + item.href)) && !path.includes("routing-forms/")
-      );
-    },
-    child: [
-      {
-        name: "app_store",
-        href: "/apps",
-        isCurrent: ({ router, item }) => {
-          const path = router.asPath.split("?")[0];
-          // During Server rendering path is /v2/apps but on client it becomes /apps(weird..)
-          return (
-            (path.startsWith(item.href) || path.startsWith("/v2" + item.href)) &&
-            !path.includes("routing-forms/") &&
-            !path.includes("/installed")
-          );
-        },
-      },
-      {
-        name: "installed_apps",
-        href: "/apps/installed/calendar",
-        isCurrent: ({ router }) => {
-          const path = router.asPath;
-          return path.startsWith("/apps/installed/") || path.startsWith("/v2/apps/installed/");
-        },
-      },
-    ],
-  },
-  {
     name: MORE_SEPARATOR_NAME,
     href: "/more",
     icon: MoreHorizontal,
@@ -536,16 +489,6 @@ const navigation: NavigationItemType[] = [
     isCurrent: ({ router }) => {
       return router.asPath.startsWith("/apps/routing-forms/");
     },
-  },
-  {
-    name: "workflows",
-    href: "/workflows",
-    icon: Zap,
-  },
-  {
-    name: "insights",
-    href: "/insights",
-    icon: BarChart,
   },
   {
     name: "settings",
@@ -875,7 +818,7 @@ function MainContainer({
     <main className="bg-default relative z-0 flex-1 focus:outline-none">
       {/* show top navigation for md and smaller (tablet and phones) */}
       {TopNavContainerProp}
-      <div className="max-w-full py-4 px-4 md:py-8 lg:px-12">
+      <div className="max-w-full px-4 py-4 md:py-8 lg:px-12">
         <ErrorBoundary>
           {!props.withoutMain ? <ShellMain {...props}>{props.children}</ShellMain> : props.children}
         </ErrorBoundary>
