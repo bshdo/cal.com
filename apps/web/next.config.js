@@ -91,6 +91,9 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: !!process.env.CI,
   },
+  experimental: {
+    swcFileReading: false,
+  },
   transpilePackages: [
     "@calcom/app-store",
     "@calcom/core",
